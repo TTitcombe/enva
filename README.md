@@ -5,10 +5,10 @@ Making working with environment variables in Python slightly better.
 Ever needed to get an environment variable as an integer or a boolean?
 Ever needed to assert that an environment variable is set?
 Stop looking at the standard library. It can't help you.
-Env var utils can.
+`enva` can.
 
 
-Env var utils provides utility functionality for working with environment variables in Python.
+`enva` provides utility functionality for working with environment variables in Python.
 There are two main features:
 
 * Variable retrieval (as alternative types, e.g. int)
