@@ -1,0 +1,32 @@
+name: Unit testing
+
+on:
+  pull_request:
+    branches:    
+      - 'master'
+      - 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install .
+      - name: Lint
+        run: |
+          flake8 enva
+          black codesearch --check
+          isort codesearch --check
+          mypy enva
+      - name: Unit testing
+        run: |
+          pytest tests --cov=enva --cov-fail-under=95
