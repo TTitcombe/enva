@@ -24,8 +24,8 @@ jobs:
       - name: Lint
         run: |
           flake8 enva
-          black codesearch --check
-          isort codesearch --check
+          black enva --check
+          isort enva --check
           mypy enva
       - name: Unit testing
         run: |
