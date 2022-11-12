@@ -3,8 +3,11 @@ from unittest import mock
 
 import pytest
 
-from enva.checkers import (check_variable_exists, require_variable_as_type,
-                           require_variable_exists)
+from enva.checkers import (
+    check_variable_exists,
+    require_variable_as_type,
+    require_variable_exists,
+)
 
 
 class TestRequireVariableExists:
