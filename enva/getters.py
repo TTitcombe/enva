@@ -1,8 +1,10 @@
 import os
-from typing import Callable, Optional, Union
+from typing import Callable, Optional, TypeVar, Union
+
+T = TypeVar("T")
 
 
-def get_env_with_fallback(primary_variable: str, secondary_variable: str):
+def get_env_with_fallback(primary_variable: str, secondary_variable: str) -> Union[str, None]:
     """
     Retrieve an environment variable, from a priority list of variables.
 
@@ -100,10 +102,19 @@ def get_env_bool(
 
 
 def _get_env_type_wrapper(
-    variable: str, default_value, conversion_func: Callable, raise_typeerror: bool
-):
+    variable: str,
+    default_value: T,
+    conversion_func: Callable[..., T],
+    raise_typeerror: bool,
+) -> Union[T, None]:
     """
     Wrapper for converting an environment variable to a particular type.
+
+    Raises
+    ------
+    TypeError
+        If env variable cannot be converted by conversion function
+        and errors are allowed to be raised by the function
     """
     retrieved_value = os.getenv(variable, default_value)
 
@@ -115,4 +126,4 @@ def _get_env_type_wrapper(
                 f"{variable} variable is not a valid type. Value: {retrieved_value}"
             )
 
-        return None
+    return None
