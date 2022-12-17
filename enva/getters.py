@@ -4,7 +4,9 @@ from typing import Callable, Optional, TypeVar, Union
 T = TypeVar("T")
 
 
-def get_env_with_fallback(primary_variable: str, secondary_variable: str) -> Union[str, None]:
+def get_env_with_fallback(
+    primary_variable: str, secondary_variable: str
+) -> Union[str, None]:
     """
     Retrieve an environment variable, from a priority list of variables.
 
