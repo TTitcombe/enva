@@ -1,4 +1,5 @@
 import os
+from typing import Callable
 
 
 def require_variable_exists(variable: str) -> None:
@@ -6,7 +7,7 @@ def require_variable_exists(variable: str) -> None:
         raise RuntimeError(f"{variable} environment variable is not set")
 
 
-def require_variable_as_type(variable: str, type_conversion) -> None:
+def require_variable_as_type(variable: str, type_conversion: Callable) -> None:
     require_variable_exists(variable)
     type_conversion(os.getenv(variable))
 

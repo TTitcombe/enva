@@ -1,7 +1,12 @@
 import os
+from typing import Callable, Optional, TypeVar, Union
+
+T = TypeVar("T")
 
 
-def get_env_with_fallback(primary_variable: str, secondary_variable: str):
+def get_env_with_fallback(
+    primary_variable: str, secondary_variable: str
+) -> Union[str, None]:
     """
     Retrieve an environment variable, from a priority list of variables.
 
@@ -14,15 +19,17 @@ def get_env_with_fallback(primary_variable: str, secondary_variable: str):
         Otherwise, the value assigned to the given environment variables
         in the prioritised order.
     """
-    if (primary_value := os.getenv(primary_variable)) is not None:
+    primary_value = os.getenv(primary_variable)
+
+    if primary_value is not None:
         return primary_value
     else:
         return os.getenv(secondary_variable)
 
 
 def get_env_int(
-    variable: str, default_int: int | None = None, raise_typeerror: bool = False
-) -> None | int:
+    variable: str, default_int: Optional[int] = None, raise_typeerror: bool = False
+) -> Union[None, int]:
     """
     Get an environment variable and convert to an integer.
 
@@ -49,14 +56,14 @@ def get_env_int(
 
 
 def get_env_float(
-    variable: str, default_float: float | None = None, raise_typeerror: bool = False
-) -> None | float:
+    variable: str, default_float: Optional[float] = None, raise_typeerror: bool = False
+) -> Union[None, float]:
     return _get_env_type_wrapper(variable, default_float, float, raise_typeerror)
 
 
 def get_env_bool(
-    variable: str, default_bool: bool | None = None, raise_typeerror: bool = False
-) -> None | bool:
+    variable: str, default_bool: Optional[bool] = None, raise_typeerror: bool = False
+) -> Union[None, bool]:
     """
     Get an environment variable and convert to an boolean.
 
@@ -97,10 +104,19 @@ def get_env_bool(
 
 
 def _get_env_type_wrapper(
-    variable: str, default_value, conversion_func, raise_typeerror: bool
-):
+    variable: str,
+    default_value: T,
+    conversion_func: Callable[..., T],
+    raise_typeerror: bool,
+) -> Union[T, None]:
     """
     Wrapper for converting an environment variable to a particular type.
+
+    Raises
+    ------
+    TypeError
+        If env variable cannot be converted by conversion function
+        and errors are allowed to be raised by the function
     """
     retrieved_value = os.getenv(variable, default_value)
 
@@ -112,4 +128,4 @@ def _get_env_type_wrapper(
                 f"{variable} variable is not a valid type. Value: {retrieved_value}"
             )
 
-        return None
+    return None
