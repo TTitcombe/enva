@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Updated
+
+* `enva` is now Python 3.9 compatible!
+
 ### Added
 
 * Function decorator to verify env var exists

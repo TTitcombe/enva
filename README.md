@@ -23,7 +23,7 @@ the search engine for your codebase.
 
 ## Requirements
 
-* Python 3.10 or greater
+* Python 3.9 or greater
 * That's it
 
 Install enva from pypi with
